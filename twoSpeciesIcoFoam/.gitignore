@@ -1,5 +1,9 @@
 # Visual Studio Code json
 .vs*
 
-# wmake compilation on linux
+# wmake compilation folders
 linux*
+platforms
+
+# bash history
+*.bash_history
