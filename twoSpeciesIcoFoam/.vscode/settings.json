@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "Dict": "\"*Dict\": \"OpenFOAM\"",
+        "createFields.H": "cpp",
+        "PlateletEqns.H": "cpp",
+        "bloodIcoFoam.C": "cpp",
+        "twoSpeciesIcoFoam.C": "cpp"
+    }
+}
