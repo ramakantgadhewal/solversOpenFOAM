@@ -1,11 +1,13 @@
 {
     // Virtual substance eta
-    eta = max(0*Theta_B, min(1.+0*Theta_B,Theta_B));
+    eta = max(0*Theta_B, min(1.+0*Theta_B,apprxTheta_B));
     solve(
         fvm::Sp(1.0/pseudoDt,eta)
         - fvc::Sp(1.0/pseudoDt,eta)
         -fvm::laplacian(Dn,eta)
     );
+    eta.correctBoundaryConditions();
+
     
     // Calculate the binding affinity function g(eta)
     g_eta = 
@@ -35,8 +37,9 @@
 	        0*Theta_Tf,
 	        min
 	        ( 
-	           1. + 0*Theta_Tf, 
-	           tanh( constant::mathematical::pi * (1. - Theta_Tf))
+	           1.0 + 0*Theta_Tf, 
+	           1.0/std::tanh(std::atan(1)* 4.0 * 0.95) *
+                 tanh( constant::mathematical::pi * (0.95 - Theta_Tf))
 	        )
 	    )
     );
@@ -69,6 +72,7 @@
         + KcohPmax*g_eta*Pm
     );
 
+    PbEqn.relax();
     PbEqn.solve();
     Pb.correctBoundaryConditions();
 }
